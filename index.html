@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Cash V2 - 5% Daily</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+  <meta property="og:title" content="Smart Cash Network - Earn 5% Daily with Your Team">
+  <meta property="og:description" content="Invest in USDT, earn 5% daily, grow your team and unlock weekly rank rewards.">
+  <meta property="og:image" content="meta.png">
+  <meta property="og:url" content="index.html">
+  <meta name="theme-color" content="#1e90ff">
+  <meta http-equiv="Cache-Control" content="no-store" />
+
+  <!-- Styles and Scripts -->
+  <link rel="stylesheet" href="luxury-theme.css?v=3">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <img src="logo.png" alt="SmartCash Logo" class="logo" />
+    </header>
+
+    <div id="statusBox" class="status-box" style="display: none;"></div>
+
+    <!-- Registration -->
+<section id="registration" class="card" style="display: none;">
+  <h2 style="margin-bottom: 30px;"><i class="fas fa-user-plus"></i> Registration</h2>
+
+  <div class="centered-form">
+    <div class="mini-section">
+      <h3><i class="fas fa-id-badge"></i> Your Name</h3>
+      <input type="text" id="usernameInput" class="styled-input" placeholder="Enter your name" maxlength="32" />
+    </div>
+
+    <div class="mini-section">
+      <h3><i class="fas fa-link"></i> Upline ID</h3>
+      <input type="number" id="uplineInput" class="styled-input" placeholder="ID of the referrer who invited you" />
+    </div>
+
+    <div class="mini-section">
+      <button id="registerBtn" class="primary-btn" style="width: 160px;">Register</button>
+    </div>
+  </div>
+</section>
+
+
+<section id="dashboard" class="card">
+  <!-- Name, Profile & Team Network -->
+<!-- Estadísticas principales: Profile y luego Stats -->
+<div class="mini-grid grid-4col"
+
+   Profile -->
+  <div class="mini-section media-block">
+    <div class="media-icon"><i class="fas fa-user-cog"></i></div>
+    <div class="media-content">
+      <h3>Profile</h3>
+      <p><i class="fas fa-id-badge"></i> Name: <span id="userName">-</span></p>
+      <p><i class="fas fa-id-badge"></i> ID: <span id="userId">-</span></p>
+    </div>
+  </div>
+
+  <div class="mini-section media-block">
+    <div class="media-icon"><i class="fas fa-network-wired"></i></div>
+    <div class="media-content">
+      <h3>Team Network</h3>
+      <p><span id="teamNetwork">0</span> referrals</p>
+    </div>
+  </div>
+<div class="mini-section media-block">
+  <div class="media-icon"><i class="fas fa-money-bill-wave"></i></div>
+  <div class="media-content">
+    <h3>Available Balance</h3>
+    <p style="font-size: 1.2rem; font-weight: bold; color: var(--highlight-color);">
+      <span id="availableBalance">-</span> USDT
+    </p>
+    <div class="button-row" style="margin-top: 12px; display: flex; justify-content: center; gap: 5px;">
+      <button id="reinvestBtn" class="primary-btn" style="width: 75px; padding: 6px 8px; font-size: 0.6rem;">Reinvest</button>
+      <button id="withdrawBtn" class="primary-btn" style="width: 75px; padding: 6px 8px; font-size: 0.6rem;">Withdraw</button>
+    </div>
+  </div>
+</div>
+
+  <div class="mini-section media-block">
+    <div class="media-icon"><i class="fas fa-star"></i></div>
+    <div class="media-content">
+      <h3>Rank</h3>
+      <p><i class="fas fa-star"></i> <span id="userRank">-</span></p>
+    </div>
+  </div>
+
+  <!-- Team Volume -->
+  <div class="mini-section media-block">
+    <div class="media-icon"><i class="fas fa-users-cog"></i></div>
+    <div class="media-content">
+      <h3>Team Volume</h3>
+      <p><span id="teamVolume">-</span> USDT</p>
+    </div>
+  </div>
+
+  <!-- Rank & Weekly Salary -->
+  <div class="mini-section media-block">
+    <div class="media-icon"><i class="fas fa-award"></i></div>
+    <div class="media-content">
+      <h3>Rank & Weekly Salary</h3>
+      <p><i class="fas fa-medal"></i> Rank: <span id="rankLevel">-</span></p>
+      <!--<p><i class="fas fa-coins"></i> Salary: <span id="totalSalary">-</span> USDT</p>-->
+    </div>
+  </div>
+
+  <!-- Total Withdrawn -->
+  <div class="mini-section media-block">
+    <div class="media-icon"><i class="fas fa-arrow-down"></i></div>
+    <div class="media-content">
+      <h3>Total Withdrawn</h3>
+      <p><span id="totalWithdrawn">-</span> USDT</p>
+    </div>
+  </div>
+
+  <!-- Team Rewards -->
+  <div class="mini-section media-block">
+    <div class="media-icon"><i class="fas fa-gift"></i></div>
+    <div class="media-content">
+      <h3>Team Rewards</h3>
+      <p><span id="totalReferral">-</span> USDT</p>
+    </div>
+  </div>
+
+</div>
+
+
+  <!-- My Stake -->
+  <div class="mini-section">
+    <h4><i class="fas fa-vault" style="margin-right: 6px;"></i> My Stake</h4>
+
+   <div class="mini-section" style="display: flex; flex-direction: column; align-items: center; margin-bottom: 24px;">
+  <input
+    type="number"
+    id="investAmount"
+    class="styled-input"
+    placeholder="Amount to invest (min. 10 USDT)"
+    min="10"
+    style="margin-bottom: 12px; max-width: 280px; width: 100%; text-align: center;"
+  />
+  <button
+    id="investBtn"
+    class="primary-btn"
+    style="width: 120px; padding: 8px 12px; font-size: 0.75rem;"
+  >
+    Approve & Invest
+  </button>
+</div>
+
+    <div class="mini-grid grid-4col" style="margin-top: 24px;">
+      <div class="mini-section media-block">
+        <div class="media-icon"><i class="fas fa-arrow-up-right-dots"></i></div>
+        <div class="media-content">
+          <h3>Total Invested</h3>
+          <p><span id="totalInvested">-</span> USDT</p>
+        </div>
+      </div>
+      <div class="mini-section media-block">
+        <div class="media-icon"><i class="fas fa-chart-pie"></i></div>
+        <div class="media-content">
+          <h3>Accumulated Earnings</h3>
+          <p><span id="passiveEarnings">0.00</span> USDT</p>
+        </div>
+      </div>
+      <div class="mini-section media-block">
+        <div class="media-icon"><i class="fas fa-coins"></i></div>
+        <div class="media-content">
+          <h3>Daily Profit</h3>
+          <p><span id="dailyProfit">0.00</span> USDT</p>
+        </div>
+      </div>
+      <div class="mini-section media-block">
+        <div class="media-icon"><i class="fas fa-chart-line"></i></div>
+        <div class="media-content">
+          <h3>Total After 100 Days</h3>
+          <p><span id="totalProfit">0.00</span> USDT</p>
+        </div>
+        </div>
+</section>
+
+  <section id="vipProgress" class="card" style="display: none;"> 
+  <h2><i class="fas fa-trophy"></i> Rank Progress</h2>
+
+  <!-- Barra de progreso -->
+  <div class="progressBar"><div id="vipBar" class="progressFill"></div></div>
+  <p><span id="vipProgressText">Loading...</span></p>
+<!--<p id="nextSalaryCountdown" style="font-size: 16px; margin-bottom: 4px; color: #ccc;"></p>
+<p id="nextSalaryDate" style="font-size: 14px; color: #999;"></p>
+<p id="salaryWarning" style="font-size: 14px; color: #ffcc00; margin-top: 4px;"></p>-->
+
+  <!-- Explicación -->
+  <div class="mini-section" style="margin-top: 20px;">
+    <h3><i class="fas fa-info-circle"></i> How to Increase Your Rank</h3>
+    <p style="line-height: 1.6;">
+      To move up in rank, you must meet two conditions:<br><br>
+      <strong>1. Team Volume:</strong> The total USDT amount invested by your team.<br>
+      <strong>2. Active Direct Referrals:</strong> Direct users who have an active investment.<br><br>
+      Each rank unlocks a weekly salary paid every 30 days Your progress bar shows your percentage toward the next rank.
+    </p>
+  </div>
+
+<div class="mini-section" style="margin-top: 20px;">
+  <h3><i class="fas fa-star"></i> Rank Classification</h3>
+
+  <!-- Tabla con scroll horizontal responsivo -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Team Volume (USDT)</th>
+          <th>Active Direct Partners</th>
+          <th>Weekly Salary</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1 - Bronze</td>   <td>2,000</td>     <td>3</td>   <td>25 USDT</td></tr>
+        <tr><td>2 - Silver</td>   <td>10,000</td>    <td>6</td>   <td>50 USDT</td></tr>
+        <tr><td>3 - Gold</td>     <td>30,000</td>    <td>12</td>  <td>100 USDT</td></tr>
+        <tr><td>4 - Platinum</td> <td>60,000</td>    <td>20</td>  <td>200 USDT</td></tr>
+        <tr><td>5 - Diamond</td>  <td>120,000</td>   <td>35</td>  <td>350 USDT</td></tr>
+        <tr><td>6 - Elite</td>    <td>250,000</td>   <td>60</td>  <td>500 USDT</td></tr>
+        <tr><td>7 - Legend</td>   <td>500,000</td>   <td>100</td> <td>1,000 USDT</td></tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+
+</section>
+
+    <!-- Deposit History -->
+    <section id="deposits" class="card" style="display: none;">
+      <h2 style="margin-bottom: 30px;">
+  <i class="fas fa-file-invoice-dollar"></i> Deposit History
+</h2>
+      <table>
+        <thead><tr><th>Amount</th><th>Date</th></tr></thead>
+        <tbody id="depositsTable"></tbody>
+      </table>
+    </section>
+
+<section id="referrals" class="card" style="display: none;">
+  <h2 style="margin-bottom: 30px;"><i class="fas fa-users"></i> Team</h2>
+
+  <!-- Resumen del equipo (una fila con mini-secciones) -->
+ <!-- Tabs por niveles de referidos -->
+  <div class="tabs" id="referralTabs"></div>
+
+  <!-- Detalle de referidos -->
+  <div id="referralList" class="referral-detail"></div>
+
+  <!-- Enlace de referido -->
+  <h3 style="margin-top: 50px;"><i class="fas fa-link"></i> Your Referral Link</h3>
+  <div class="row-inline">
+    <input type="text" id="refLinkInput" class="styled-input" readonly />
+    <button onclick="copyRefLink()" class="primary-btn" style="margin-left: 20px;">Copy</button>
+  </div>
+</section>
+
+
+  <!-- Global Stats -->
+<section id="general" class="card" style="display: none;">
+  <h2 style="margin-bottom: 30px;"><i class="fas fa-globe"></i> General</h2>
+
+  <!-- Totales globales -->
+  <div class="mini-section" style="margin-bottom: 20px;">
+    <h3><i class="fas fa-users"></i> Total Partners</h3>
+    <p><span id="totalUsers">-</span> registered</p>
+
+    <h3 style="margin-top: 12px;"><i class="fas fa-coins"></i> Total Invested</h3>
+    <p><span id="totalGlobalInvested">Loading...</span> USDT</p>
+
+    <h3 style="margin-top: 12px;"><i class="fas fa-hand-holding-usd"></i> Referral Bonuses Paid</h3>
+    <p><span id="totalGlobalRefBonuses">Loading...</span> USDT</p>
+  </div>
+
+<!-- Wallet & User ID -->
+<div class="mini-section" style="margin-bottom: 16px;">
+  <h3><i class="fas fa-wallet"></i> Wallet</h3>
+  <p><span id="settingsUserWallet">-</span></p>
+
+  <h3 style="margin-top: 12px;"><i class="fas fa-id-card"></i> Your User ID</h3>
+  <p><span id="settingsUserId">-</span></p>
+</div>
+
+
+<!-- Smart Contract Info -->
+<div class="mini-section" style="margin-bottom: 15px;">
+  <h3><i class="fas fa-shield-alt"></i> Smart Contract</h3>
+  <div style="display: flex; flex-direction: column; gap: 15px; padding-left: 6px;">
+
+    <a href="https://t.me/smartcashnetworknews"
+       target="_blank"
+       style="color: #0088cc; text-decoration: none; display: flex; align-items: center; gap: 15px;">
+      <i class="fab fa-telegram-plane"></i> Join our Telegram Channel
+    </a>
+
+    <a href="https://bscscan.com/address/0xd6c31AA5C82f1f6f21DC74C7a0c01ed313d3436f"
+       target="_blank"
+       style="color: #00bcd4; text-decoration: none; display: flex; align-items: center; gap: 15px;">
+      <i class="fas fa-file-contract"></i> View Verified Contract on BscScan
+    </a>
+
+    <a href="https://hazecrypto.net/audit/SmartCashNetwork"
+       target="_blank"
+       style="color: #4caf50; text-decoration: none; display: flex; align-items: center; gap: 15px;">
+      <i class="fas fa-search-dollar"></i> View Audit Report
+    </a>
+
+    <a href="https://smartcashnetwork.app/doc/EN.pdf"
+       download
+       style="color: #ffc107; text-decoration: none; display: flex; align-items: center; gap: 15px;">
+      <i class="fas fa-file-pdf"></i> Download Info PDF
+    </a>
+
+  </div>
+</div>
+
+  <!-- Copyright -->
+  <div class="mini-section" style="text-align: center; margin-top: 20px; font-size: 0.85rem; color: #888;">
+    <i class="fas fa-copyright"></i> Smart Cash Network Company
+  </div>
+</section>
+
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <button onclick="showSection('dashboard')"><i class="fas fa-user"></i><span>Dashboard</span></button>
+     <button onclick="showSection('referrals')"><i class="fas fa-users"></i><span>Team</span></button>
+    <button onclick="showSection('vipProgress')"><i class="fas fa-star"></i><span>Rank</span></button>
+    <button onclick="showSection('deposits')"><i class="fas fa-list"></i><span>Deposits</span></button>
+    <button onclick="showSection('general')"><i class="	fas fa-globe"></i><span>General</span></button>
+
+
+  </nav>
+  <script src="config123224351.js"></script>
+  <script defer src="index.js?v=3"></script>
+  
+</body>
+
+
+</html>

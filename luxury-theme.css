@@ -1,0 +1,536 @@
+:root {
+  --primary-color: #bfa76f;
+  --primary-color-hover: #a88f5a;
+  --highlight-color: #f0e6d2;
+  --neutral-bg: #141414;
+  --card-bg: #1b1b1b;
+  --text-color: #eaeaea;
+  --muted-text: #999;
+  --border-color: #2c2c2c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to bottom, #0e0e0e, #141414, #0e0e0e);
+  z-index: -1;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  color: var(--text-color);
+  background-color: var(--neutral-bg);
+  line-height: 1;
+  padding: 10px;
+  padding-bottom: 80px;
+}
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+header {
+  background: linear-gradient(to right, #252525, #161616);
+  border-radius: 20px;
+  padding: 20px;
+  margin: 0 auto 20px auto; /* centrado horizontal y separación abajo */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  text-align: center; /* ← centra el logo */
+  max-width: 300%;
+}
+
+header h1 {
+  font-size: 2rem;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+header p {
+  color: var(--muted-text);
+}
+
+.logo {.mini-section
+  display: block;
+  margin: 0 auto;
+  max-width: 260px;
+  height: auto;
+}
+.primary-btn, button {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(191, 167, 111, 0.2);
+}
+
+.primary-btn:hover, button:hover {
+  background-color: var(--primary-color-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(191, 167, 111, 0.3);
+}
+
+.styled-input, input[type="number"], #investAmount {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 10px;
+  background: #1f1f1f;
+  border: 1px solid #333;
+  color: var(--text-color);
+  outline: none;
+}
+.card, .mini-section {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+.table-wrapper, table, .ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 0.75rem;
+}
+@media screen and (max-width: 600px) {
+  .ref-table {
+    font-size: 0.75rem;
+  }
+}
+.table-wrapper th, table th, .ref-table th {
+  background-color: #1f1f1f;
+  color: var(--highlight-color);
+  padding: 12px 8px;
+  border-bottom: 1px solid #383e47;
+}
+
+.table-wrapper td, table td, .ref-table td {
+  padding: 10px 6px;
+  text-align: center;
+  border-bottom: 1px solid #353535}
+
+.table-wrapper tr:nth-child(even), table tr:nth-child(even), .ref-table tr:nth-child(even) {
+  background-color: #353535;
+}
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.tabs button {
+  flex: 1;
+  text-align: center;
+  background-color: #222;
+  border: 1px solid var(--border-color);
+  color: var(--highlight-color);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 6px 0;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  outline: none;
+  white-space: nowrap;
+}
+
+.tabs button:hover {
+  background-color: #383838;
+}
+
+.tabs button.active {
+  background-color: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+}
+.progressBar {
+  width: 100%;
+  height: 20px;
+  background: #222;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 16px 0;
+}
+
+.progressFill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #bfa76f, #a88f5a);
+  transition: width 0.5s ease;
+}
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #101010;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid var(--border-color);
+  z-index: 999;
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+  color: var(--muted-text);
+  flex: 1;
+  height: 100%;
+  font-size: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.bottom-nav button i {
+  font-size: 1.2rem;
+  margin-bottom: 2px;
+  color: var(--primary-color);
+}
+
+.bottom-nav button span {
+  font-size: 0.7rem;
+}
+
+.bottom-nav button:hover {
+  background-color: #292929;
+}
+
+/* Mejora en .mini-grid y secciones internas */
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 5px;
+}
+
+.stake-grid-2col {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 5px;
+}
+
+/* Botones más espaciados dentro de mini-grid */
+.mini-grid button.primary-btn {
+  width: 100%;
+  padding: 12px;
+}
+
+/* Barra de progreso más ancha */
+.progressBar {
+  height: 22px;
+  margin: 24px 0 12px 0;
+}
+.card {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+.progressFill {
+  background: linear-gradient(90deg, #bfa76f, #a88f5a);
+}
+
+@media (max-width: 600px) {
+  .row-inline {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 5px; /* Aumenta la separación vertical */
+  }
+
+  .row-inline input,
+  .row-inline .primary-btn {
+    width: 90%;
+    max-width: 320px;
+    text-align: center;
+gap: 1px;
+  }
+
+  .mini-section input,
+  .mini-section button,
+  .styled-input,
+  .primary-btn {
+    width: 100%;
+    max-width: 320px;
+    margin: 10px; /* Asegura separación inferior */
+    display: block;
+  }
+
+  .primary-btn {
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .tabs button {
+    flex: 0 1 45%;
+    margin: 5px;
+  }
+
+  .logo {
+    max-width: 80%;
+    height: auto;
+  }
+
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  .container {
+    padding: 0 10px;
+  }
+
+  .mini-grid,
+  .stake-grid-2col {
+    grid-template-columns: 1fr;
+  }
+
+  table th, table td {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card {
+    max-width: 1200px;
+    margin: 0 auto 1px auto;
+    padding: 1px;
+  }
+
+  .mini-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 5px;
+  }
+
+  .stake-grid-2col {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+/* === Hover elegante solo para minisecciones === */
+.mini-section {
+  transition: all 0.3s ease;
+}
+
+
+/* Grid de 4 columnas solo en escritorio */
+.grid-4col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 5px;
+}
+
+/* En escritorio >=1024px: exactamente 4 por fila */
+@media (min-width: 1024px) {
+  .grid-4col {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.mini-section h3 {
+  color: var(--primary-color);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+.grid-3col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 5px;
+}
+
+@media (min-width: 1024px) {
+  .grid-3col {
+   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-4col {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+/* === Diseño de 2 columnas en mini-section === */
+.media-block {
+  display: flex;
+  align-items: center; /* ← Alinea el ícono al centro vertical */
+  gap: 5px;
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.media-icon {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  flex-shrink: 0;
+  min-width: 30px;
+  text-align: center;
+}
+
+.media-content {
+  flex: 1;
+  text-align: right;
+}
+
+.media-content h3 {
+  margin-bottom: 6px;
+  color: var(--primary-color);
+  font-weight: 600;
+  text-align: right;
+}
+
+.media-content p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+  color: #ddd;
+  text-align: right;
+}
+.compact-buttons .primary-btn {
+  width: 0px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+}
+
+.status-box {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 280px;
+  max-width: 90%;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #f4f4f4;
+  text-align: center;
+  z-index: 9999;
+  background-color: #1c1f2b;
+  border: 1px solid transparent;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+  opacity: 0.95;
+  animation: fadeInOut 5s ease forwards;
+}
+
+/* === Tonos Luxury === */
+.status-box.success {
+  background-color: #352703;
+  border: 1px solid #c5a44a;
+  color: #b1f2c4;
+}
+
+.status-box.error {
+  background-color: #2a1818;
+  border: 1px solid #e05858;
+  color: #f4cccc;
+}
+
+.status-box.info {
+  background-color: #102530;
+  border: 1px solid #00bcd4;
+  color: #c7ecf3;
+}
+
+/* Animación fade elegante */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  10%, 90% {
+    opacity: 0.95;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+h2 {
+  color: var(--primary-color);
+  text-shadow: 0 0 4px rgba(191, 167, 111, 0.2);
+}
+#registration.card {
+  max-width: 420px;
+  margin: 0 auto 30px auto; /* centrado horizontal y espacio abajo */
+  padding: 24px;
+}
+h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color) ; /* o var(--primary-color) para tono dorado */
+  margin-bottom: 8px;
+  text-shadow: 0 0 4px rgba(191, 167, 111, 0.2); /* suave resplandor dorado */
+  letter-spacing: 0.5px;
+}
+.centered-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.centered-form .styled-input {
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+}
+
+.centered-form .primary-btn {
+  margin-top: 10px;
+}
+.mini-section h3 {
+  margin-bottom: 20px;
+}
+
+.mini-section p {
+  margin-bottom: 12px;
+}
+.row-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+#refLinkInput {
+  flex: 1;
+  min-width: 220px;
+}
+
+#refLinkInput + .primary-btn {
+  flex-shrink: 0;
+  padding: 10px 16px;
+}
